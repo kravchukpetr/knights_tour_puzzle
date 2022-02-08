@@ -128,7 +128,7 @@ def get_input_position(board_size, input_is_first, input_board_mtx):
 
 
 num_dim = 2
-min_board = 0
+min_board = 3
 steps_list = [1, 2, -1, -2]
 is_first = 1
 game_over = False
