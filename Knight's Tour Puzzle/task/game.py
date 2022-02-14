@@ -1,4 +1,3 @@
-# Write your code here
 
 def get_possible_step(board_mtx, position_val, axis_x, axis_y, offset):
     offset_x = offset[axis_x]
@@ -62,9 +61,6 @@ def check_is_game_over(input_board_mtx):
     count_move = [j for i in input_board_mtx for j in i if str(j).isdigit()]
     count_not_visited = [j for i in input_board_mtx for j in i if j == 'o']
     count_visited = [j for i in input_board_mtx for j in i if str(j) in ['*', 'X']]
-    # print("count_move = ", count_move)
-    # print("count_not_visited = ", count_not_visited)
-    # print("count_visited = ", count_visited)
     if len(count_move) == 0:
         if len(count_not_visited) == 0:
             game_over_status = 'What a great tour! Congratulations!'
@@ -75,7 +71,6 @@ def check_is_game_over(input_board_mtx):
 
 
 def change_desk(board_mtx, position_val, board_val, num_sep, is_print_desk):
-    # print(' ' * len(str(board_val[1])), '-' * (board_val[0] * (num_sep + 1) + 3), sep='')
     board_mtx = [['*' if x == 'X' else x for x in l] for l in board_mtx]
     board_mtx = [['o' if str(x).isdigit() else x for x in l] for l in board_mtx]
     board_mtx[position_val[1]-1][position_val[0]-1] = 'X'
@@ -84,11 +79,6 @@ def change_desk(board_mtx, position_val, board_val, num_sep, is_print_desk):
 
     if is_print_desk:
         print_desc(board_val, board_mtx, num_sep, 1)
-        # print(' ' * len(str(board_val[1])), '-' * (board_val[0] * (num_sep + 1) + 3), sep='')
-        # print_matrix(board_mtx, num_sep)
-        # footer = range(1, board_val[0] + 1)
-        # print(' ' * len(str(board_val[1])), '-' * (board_val[0] * (num_sep + 1) + 3), sep='')
-        # print(' ' * (len(str(board_val[1])) + 1), ''.join(' ' * ((num_sep + 1) - len(str(x))) + str(x) for x in footer), sep='')
     game_over_status, game_result = check_is_game_over(board_mtx)
     return board_mtx, game_over_status, game_result
 
@@ -141,14 +131,14 @@ def get_input_position(board_size, input_is_first, input_board_mtx, is_corrcet_m
                             is_corrcet_move = True
                             break
                         else:
-                            # print("Invalid move!")
                             is_corrcet_move = False
                     else:
-                        print("Invalid move!")
                         is_corrcet_move = False
                 else:
+                    is_corrcet_move = False
                     print("Invalid position!")
             else:
+                is_corrcet_move = False
                 print("Invalid position!")
         except ValueError:
             print("Invalid position!")
@@ -163,7 +153,6 @@ def is_exist_solution(board_mtx, board, num_sep, game_over, solution_list):
 def print_solution(input_board_mtx, input_solution_list, num_sep, axis_x, axis_y, board):
     for i, solution in enumerate(input_solution_list):
         input_board_mtx[solution[axis_x] - 1][solution[axis_y] - 1] = i + 1
-    # print(input_board_mtx)
     print_desc(board, board_mtx, num_sep, 2)
 
 
@@ -179,7 +168,6 @@ def get_max_possible_position(mtx):
 
 
 def find_solution(board_mtx, board, num_sep, game_over, game_result, solution_list):
-    # game_result = 0
     if game_over:
         return board_mtx, game_over, game_result, solution_list
     else:
@@ -187,7 +175,6 @@ def find_solution(board_mtx, board, num_sep, game_over, game_result, solution_li
         # print(calc_position)
         solution_list.append(calc_position)
         board_mtx, game_over, game_result = change_desk(board_mtx, calc_position, board, num_sep, is_print_desk=False)
-        # print("game_result = ", game_result)
         return find_solution(board_mtx, board, num_sep, game_over, game_result, solution_list)
 
 
@@ -220,9 +207,6 @@ while True:
         break
     elif type_game == 'n':
         board_mtx, game_over, result, solution_list = find_solution(board_mtx, board, num_sep, game_over, 0, solution_list)
-        # print("game_over = ", game_over)
-        # print("game_result = ", result)
-        # print("solution_list = ", solution_list)
         if result == 1:
             print("Here's the solution!")
             print_solution(board_mtx, solution_list, num_sep, 1, 0, board)
